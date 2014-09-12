@@ -1,0 +1,36 @@
+﻿<html>
+<head>
+    
+    <title>MapBox Example</title>
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.css' rel='stylesheet' />
+    <style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+
+</head>
+<body>
+    <form id="form1">
+    <div id="map"></div>
+    
+	<script>
+        L.mapbox.accessToken = 'pk.eyJ1IjoiZ3NlbXdlemkiLCJhIjoiUE9LbURLUSJ9.LpDg-Gm9UTmHspfdJUARdg';
+        var map = L.mapbox.map('map', 'gsemwezi.jf5dm5oh')
+            .setView([1.310321, 32.577900], 5); 
+
+        L.marker([40, -74.50], {
+            icon: L.mapbox.marker.icon({
+                'marker-size': 'large',
+                'marker-symbol': 'bus',
+                'marker-color': '#fa0'
+            })
+        }).addTo(map);
+
+        //        L.mapbox.featureLayer().loadURL('uganda_reduced.geojson').addTo(map);
+        L.mapbox.featureLayer().loadURL('geojson/uganda.geojson').addTo(map);
+</script>
+    </form>
+</body>
+    
+</html>
