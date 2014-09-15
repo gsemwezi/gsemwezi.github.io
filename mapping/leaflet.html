@@ -1,0 +1,46 @@
+﻿<html>
+	
+	<head>
+		
+		<title>Leaflet Example</title>
+		
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+		
+		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+		
+		<script src="http://code.jquery.com/jquery.js"></script>
+		<style>
+			body { margin:0; padding:0; }
+			#map { position:absolute; top:0; bottom:0; width:100%; }
+		</style>
+	</head>
+	
+	<body>
+		
+		<div id="map"></div>
+		<script>
+		
+			var mapboxTiles = L.tileLayer('https://{s}.tiles.mapbox.com/v3/gsemwezi.jf5dm5oh/{z}/{x}/{y}.png', {
+				attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
+			});
+
+			var map = L.map('map')
+				.addLayer(mapboxTiles)
+				.setView([1.310321, 32.577900], 7);
+			
+			
+			$.ajax({
+				type: "POST",
+				url: "geojson/uganda.json",
+				dataType: 'json',
+				success: function (response) {
+
+					geojsonLayer = L.geoJson(response).addTo(map);
+				}
+			});
+		</script>
+
+  
+	</body>
+	
+</html>
