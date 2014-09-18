@@ -31,19 +31,9 @@
 			
 			var geoJsonLayer = new L.GeoJSON.AJAX("geojson/uganda.json",{onEachFeature:onEachFeature}).addTo(map);
 			
-			/*$.ajax({
-				type: "POST",
-				url: "geojson/uganda.json",
-				dataType: 'json',
-				success: function (response) {
-
-					geojsonLayer = L.geoJson(response,{onEachFeature: onEachFeature}).addTo(map);
-				}
-			});
-			*/
 			function onEachFeature(feature, layer) {
 				if (feature.properties) {
-					layer.bindLabel(feature.properties.ADM2_NAME, { noHide: true, direction: 'auto' });
+					L.marker(layer.getBounds().getCenter()).bindLabel(feature.properties.ADM2_NAME, { noHide: true});
 				}
 			}
 		</script>
