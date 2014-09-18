@@ -29,7 +29,7 @@
 				.addLayer(mapboxTiles)
 				.setView([1.310321, 32.577900], 8);
 			
-			var geoJsonLayer = new L.GeoJSON.AJAX("geojson/uganda.json").addTo(map);
+			var geoJsonLayer = new L.GeoJSON.AJAX("geojson/uganda.json",{onEachFeature:onEachFeature}).addTo(map);
 			
 			/*$.ajax({
 				type: "POST",
