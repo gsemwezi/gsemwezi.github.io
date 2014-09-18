@@ -5,10 +5,11 @@
 		<title>Leaflet Example</title>
 		
 		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+		<link rel="stylesheet" href="resources/leaflet.label.css" />
 		
 		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-		
-		<script src="http://code.jquery.com/jquery.js"></script>
+		<script src="resources/leaflet.label-src.js"></script>
+		<script src="resources/leaflet.ajax.js"></script>
 		<style>
 			body { margin:0; padding:0; }
 			#map { position:absolute; top:0; bottom:0; width:100%; }
@@ -26,18 +27,25 @@
 
 			var map = L.map('map')
 				.addLayer(mapboxTiles)
-				.setView([1.310321, 32.577900], 7);
+				.setView([1.310321, 32.577900], 8);
 			
+			var geoJsonLayer = new L.GeoJSON.AJAX("geojson/uganda.json").addTo(map);
 			
-			$.ajax({
+			/*$.ajax({
 				type: "POST",
-				url: "geojson/uganda.geojson",
+				url: "geojson/uganda.json",
 				dataType: 'json',
 				success: function (response) {
 
-					geojsonLayer = L.geoJson(response).addTo(map);
+					geojsonLayer = L.geoJson(response,{onEachFeature: onEachFeature}).addTo(map);
 				}
 			});
+			*/
+			function onEachFeature(feature, layer) {
+				if (feature.properties) {
+					layer.bindLabel(feature.properties.ADM2_NAME, { noHide: true, direction: 'auto' });
+				}
+			}
 		</script>
 
   
