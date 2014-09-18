@@ -33,8 +33,13 @@
 			
 			function onEachFeature(feature, layer) {
 				if (feature.properties) {
-					L.marker(layer.getBounds().getCenter()).bindLabel(feature.properties.ADM2_NAME, { noHide: true});
+					layer.bindLabel(feature.properties.ADM2_NAME, { noHide: true, direction: 'auto' });
 				}
+				addMarker(layer.getBounds().getCenter(), feature.properties.ADM2_NAME);
+			}
+			
+			function addMarker(marker_position, feature_name){
+				L.marker(marker_position).bindLabel(feature_name);
 			}
 		</script>
 
