@@ -1,0 +1,61 @@
+﻿<html>
+	
+	<head>
+		
+		<title>WFS Example</title>
+		
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+		<link rel="stylesheet" href="resources/leaflet.label.css" />
+		
+		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+		<script src="resources/leaflet.label-src.js"></script>
+		
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		<style>
+			body { margin:0; padding:0; }
+			#map { position:absolute; top:0; bottom:0; width:100%; }
+		</style>
+	</head>
+	
+	<body>
+		
+		<div id="map"></div>
+		<script>
+		
+			var mapboxTiles = L.tileLayer('https://{s}.tiles.mapbox.com/v3/gsemwezi.jf5dm5oh/{z}/{x}/{y}.png', {
+				attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
+			});
+
+			var map = L.map('map')
+				.addLayer(mapboxTiles)
+				.setView([1.310321, 32.577900], 8);
+			
+			//var geoJsonLayer = new L.GeoJSON.AJAX("http://localhost:8080/geoserver/wfs?service=wfs&version=2.0.0&request=GetFeature&typeNames=DevInfo:UGA_adm2&outputFormat=application/json&format_options=callback:getJson",{onEachFeature:onEachFeature}).addTo(map);
+			
+			$.ajax({
+				type: "POST",
+				url: "http://localhost:8080/geoserver/wfs?service=wfs&version=2.0.0&request=GetFeature&typeName=DevInfo:UGA_adm2&outputFormat=text/javascript&format_options=callback:getJson",
+				dataType: 'jsonp',
+				jsonp: 'jsonp',
+				jsonpCallback: 'getJson',
+				success: function (response) {
+					
+				}
+			});
+			
+			function getJson(data){
+				var geojsonLayer = L.geoJson(data).addTo(map);
+			}
+			
+			function onEachFeature(feature, layer) {
+				if (feature.properties) {
+					layer.bindLabel(feature.properties.ADM2_NAME, { noHide: true, direction: 'auto' });
+				}
+			}
+		</script>
+
+  
+	</body>
+	
+</html>
